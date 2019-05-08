@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Store } from './Store'
+import { Store, IAction } from './Store'
 
 interface IEpisode {
   id: number
@@ -31,6 +31,12 @@ const App: React.FC = () => {
       payload: dataJSON._embedded.episodes,
     })
   }
+
+  const toggleNavAction = (episode: IEpisode): IAction =>
+    dispatch({
+      type: 'ADD_FAV',
+      payload: episode,
+    })
 
   return (
     <>
