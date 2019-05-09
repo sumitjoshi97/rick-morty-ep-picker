@@ -29,6 +29,6 @@ export interface IAction {
 
 export interface IEpisodeProps {
   episodes: Array<IEpisode>
-  toggleFavAction: IAction
+  toggleFavAction: (arg0: IEpisode) => IAction
   favorites: Array<IEpisode>
 }
