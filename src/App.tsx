@@ -1,6 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { lazy, useContext, useEffect, Suspense } from 'react'
 import { Store } from './Store'
-import { IEpisode, IAction } from './interface'
+import { IEpisode, IAction, IEpisodeProps } from './interface'
+
+const EpisodesList = lazy<any>(() => import('./EpisodesList'))
 
 const App: React.FC = () => {
   const { state, dispatch } = useContext(Store)
@@ -38,22 +40,27 @@ const App: React.FC = () => {
     return dispatch(dispatchObj)
   }
 
+  const props: IEpisodeProps = {
+    episodes: state.episodes,
+    toggleFavAction: toggleFavAction,
+    favorites: state.favorites,
+  }
+
   return (
-    <>
-      <h1>Rick and Morty</h1>
-      <p>Pick your favorite episodes</p>
-      <section>
-        {state.episodes.map((episode: IEpisode) => (
-          <section key={episode.id}>
-            <div>{episode.name}</div>
-            <section>
-              <img src={episode.image.medium} />
-              Season: {episode.season} Number: {episode.number}
-            </section>
-          </section>
-        ))}
-      </section>
-    </>
+    <div className="app">
+      <div className="header">
+        <div>
+          <h1>Rick and Morty</h1>
+          <p>Pick your favorite episodes</p>
+        </div>
+        <div>Favorite(s): {state.favorites.length}</div>
+        <Suspense fallback={<div>loading...</div>}>
+          <div>
+            <EpisodesList {...props} />
+          </div>
+        </Suspense>
+      </div>
+    </div>
   )
 }
 
