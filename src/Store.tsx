@@ -1,14 +1,5 @@
 import React, { createContext, useReducer } from 'react'
-
-interface IState {
-  episodes: Array<any>
-  favorites: Array<any>
-}
-
-export interface IAction {
-  type: string
-  payload: any
-}
+import { IState, IAction } from './interface'
 
 const initialState: IState = {
   episodes: [],
@@ -31,6 +22,8 @@ const reducer = (state: IState, action: IAction): IState => {
 export const StoreProvider = (props: any) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   return (
-    <Store.Provider value={[state, dispatch]}>{props.children}</Store.Provider>
+    <Store.Provider value={{ state, dispatch }}>
+      {props.children}
+    </Store.Provider>
   )
 }
