@@ -54,12 +54,13 @@ const App: React.FC = () => {
           <p>Pick your favorite episodes</p>
         </div>
         <div>Favorite(s): {state.favorites.length}</div>
-        <Suspense fallback={<div>loading...</div>}>
-          <div>
-            <EpisodesList {...props} />
-          </div>
-        </Suspense>
       </div>
+
+      <Suspense fallback={<div>loading...</div>}>
+        <div>
+          <EpisodesList {...props} />
+        </div>
+      </Suspense>
     </div>
   )
 }
